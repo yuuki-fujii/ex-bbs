@@ -49,12 +49,16 @@ public class ArticleController {
 	 * @return　記事投稿画面
 	 */
 	@RequestMapping("/create")
-	public String create(ArticleForm form,Model model) {
+	public String create(ArticleForm form) {
 		Article article = new Article();
 		article.setName(form.getName());
 		article.setContent(form.getContent());
 		articleRepository.saveArticle(article);
-		return index(model);
+		return "redirect:/article/to-index";
 	}
 	
+	@RequestMapping("/to-index")
+	public String toIndex(Model model) {
+		return index(model);
+	}
 }
