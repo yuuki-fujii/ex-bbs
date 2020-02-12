@@ -5,11 +5,15 @@
 <title>掲示板システム</title>
 </head>
 <body>
-<form>
-
-<button>検索</button>
+<h3>掲示板アプリケーション</h3>
+<form th:action="@{/article/create}" method="post" th:object="${articleForm}"> 
+投稿者名：<input type="text" name="name" th:field="*{name}"><br>
+投稿内容：<br><textarea name="content" cols="50" rows="5" th:field="*{content}"></textarea><br>
+<button>記事投稿</button>
 </form>
 <br>
+<hr>
+
 <div th:each="article :${articleList}">
 	投稿ID：<span th:text="${article.id}"></span><br>
 	投稿者名：<span th:text="${article.name}"></span><br>

@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import com.example.domain.Article;
@@ -37,9 +39,19 @@ public class ArticleRepository {
 	 * @return DBに保存されている全ての記事
 	 */
 	public List<Article> findAll(){
-		String sql = "SELECT id,name,content FROM articles ";
+		String sql = "SELECT id,name,content FROM articles ORDER BY id DESC";
 		List<Article> articleList = template.query(sql, ARTICLE_ROW_MAPPER);
 		return articleList;
 	}
 	
+	
+	/**
+	 * 投稿された記事をDBに保存する
+	 */
+	public void saveArticle(Article article) {
+		String sql = "INSERT INTO articles (name, content) VALUES (:name, :content)";
+		 SqlParameterSource param = new MapSqlParameterSource()
+				 					.addValue("name", article.getName()).addValue("content", article.getContent());
+		 template.update(sql, param);
+	}
 }
