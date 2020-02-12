@@ -50,8 +50,17 @@ public class ArticleRepository {
 	 */
 	public void saveArticle(Article article) {
 		String sql = "INSERT INTO articles (name, content) VALUES (:name, :content)";
-		 SqlParameterSource param = new MapSqlParameterSource()
+		SqlParameterSource param = new MapSqlParameterSource()
 				 					.addValue("name", article.getName()).addValue("content", article.getContent());
-		 template.update(sql, param);
+		template.update(sql, param);
+	}
+	
+	/**
+	 * 投稿をデータベースから削除する
+	 */
+	public void deleteArticle(Integer id) {
+		String sql = "DELETE FROM articles WHERE id = :id";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
+		template.update(sql, param);
 	}
 }

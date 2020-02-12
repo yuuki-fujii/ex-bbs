@@ -15,9 +15,12 @@
 <hr>
 
 <div th:each="article :${articleList}">
+	<form th:action="@{'/article/delete?id=' + ${article.id}}" method="post">
 	投稿ID：<span th:text="${article.id}"></span><br>
 	投稿者名：<span th:text="${article.name}"></span><br>
 	投稿内容：<span th:text="${article.content}"></span><br><br>
+	<button>記事削除</button>
+	</form>
 	<hr>
 </div>
 

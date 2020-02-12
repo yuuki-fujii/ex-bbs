@@ -57,6 +57,25 @@ public class ArticleController {
 		return "redirect:/article/to-index";
 	}
 	
+	/**
+	 * 投稿を削除する
+	 * 
+	 * @param id　主キー
+	 * @return　
+	 */
+	@RequestMapping("/delete")
+	public String delete(Integer id) {
+		articleRepository.deleteArticle(id);
+		return "redirect:/article/to-index";
+	}
+	
+	
+	/**
+	 * ダブルサブミット対策　リダイレクト用
+	 * 
+	 * @param model リクエストスコープ
+	 * @return　記事一覧画面
+	 */
 	@RequestMapping("/to-index")
 	public String toIndex(Model model) {
 		return index(model);
