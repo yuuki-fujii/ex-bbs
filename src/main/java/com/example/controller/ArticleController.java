@@ -56,9 +56,9 @@ public class ArticleController {
 	public String index(Model model) {
 		List <Article> articleList = articleRepository.findAll();
 		
-		for (Article article : articleList) {
-			article.setCommmentList(commentRepository.findByArticleId(article.getId()));
-		}
+//		for (Article article : articleList) {
+//			article.setCommmentList(commentRepository.findByArticleId(article.getId()));
+//		}
 		
 		model.addAttribute("articleList", articleList);
 		return "index";

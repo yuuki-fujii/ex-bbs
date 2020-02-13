@@ -41,6 +41,7 @@ public class CommentRepository {
 	 * @param articleId 記事ID 
 	 * @return 同一の記事IDを持つコメント　idの降順
 	 */
+	
 	public List<Comment> findByArticleId(int articleId) {
 		String sql = "SELECT id, name, content, article_id FROM comments "
 					+"WHERE article_id = :articleId ORDER BY id DESC";
