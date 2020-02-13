@@ -68,7 +68,7 @@ public class ArticleController {
 	 * @return　記事投稿画面
 	 */
 	@RequestMapping("/insert-article")
-	public String insertArticle(@Validated ArticleForm form, BindingResult result,Model model) {
+	public String insertArticle(@Validated ArticleForm form, BindingResult result, Model model) {
 		
 		if (result.hasErrors()) {
 			return index(model);
@@ -88,10 +88,15 @@ public class ArticleController {
 	 * @return 記事投稿画面
 	 */
 	@RequestMapping("/insert-comment")
-	public String insertComment(CommentForm form) {
+	public String insertComment(@Validated CommentForm form, BindingResult result, Model model) {
+		
+		if (result.hasErrors()) {
+			return index(model);
+		}
+		
 		Comment comment = new Comment();
 		BeanUtils.copyProperties(form, comment);
-		comment.setArticleId(form.getIntArticleId());
+		comment.setArticleId(form.getArticleId());
 		commentRepository.insert(comment);
 		return "redirect:/article/to-index";
 	}

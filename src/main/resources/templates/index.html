@@ -31,10 +31,17 @@
 		コメント内容：<span th:text="${comment.content}"></span><br><br>
 	</div>
 	
-	<form th:action="@{/article/insert-comment}" method="post">
+	
+	<form th:action="@{/article/insert-comment}" method="post" th:object="${commentForm}">
 	<input type="hidden" name="articleId" th:value="${article.id}">
-	名前：<input type="text" name="name"><br>
-	コメント：<br><textarea name="content" cols="20" rows="2"></textarea><br><br>
+	<div th:if="${article.id == commentForm.articleId}">
+		<div th:errors="*{name}" style="color:red"></div>
+	</div> 
+	名前：<input type="text" name="name" th:field="*{name}"><br>
+	<div th:if="${article.id == commentForm.articleId}">
+		<span th:errors="*{content}" style="color:red"></span>
+	</div>
+	コメント：<br><textarea name="content" cols="20" rows="2" th:field="*{content}"></textarea><br><br>
 	<button>コメント投稿</button>
 	</form>
 	

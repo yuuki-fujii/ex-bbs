@@ -1,5 +1,8 @@
 package com.example.form;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 /**
  * コメント投稿フォーム.
  * 
@@ -9,13 +12,16 @@ package com.example.form;
 public class CommentForm {
 	
 	/** コメント投稿者名 */
+	@NotBlank(message = "名前を入力してください")
+	@Size(max = 50, message = "名前は50文字以内で入力してください")
 	private String name;
 	
 	/** コメント投稿内容 */
+	@NotBlank(message = "コメントを入力してください")
 	private String content;
 	
 	/** 記事ID */
-	private String articleId;
+	private Integer articleId;
 	
 
 	public String getName() {
@@ -33,16 +39,13 @@ public class CommentForm {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	
-	public String getArticleId() {
+
+	public Integer getArticleId() {
 		return articleId;
 	}
 
-	public void setArticleId(String articleId) {
+	public void setArticleId(Integer articleId) {
 		this.articleId = articleId;
 	}
 	
-	public Integer getIntArticleId() {
-		return Integer.parseInt(articleId);
-	}
 }

@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
  */
 public class ArticleForm {
 	/** 主キー */
-	private String id;
+	private Integer id;
 	
 	/** 投稿者名 */
 	@NotBlank(message = "名前を入力してください")
@@ -22,10 +22,11 @@ public class ArticleForm {
 	@NotBlank(message = "記事を入力してください")
 	private String content;
 	
-	public String getId() {
+	
+	public Integer getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public String getName() {
