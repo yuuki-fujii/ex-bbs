@@ -1,8 +1,19 @@
 package com.example.form;
 
+/**
+ * 記事投稿フォーム
+ * 
+ * @author yuuki
+ *
+ */
 public class ArticleForm {
+	/** 主キー */
 	private String id;
+	
+	/** 投稿者名 */
 	private String name;
+	
+	/** 投稿内容 */
 	private String content;
 	
 	public String getId() {

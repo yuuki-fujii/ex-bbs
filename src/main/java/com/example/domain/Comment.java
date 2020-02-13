@@ -16,7 +16,7 @@ public class Comment {
 	/** 投稿内容 */
 	private String content;
 	
-	/** 記事のID */
+	/** コメント対象の記事のID 外部キー */
 	private Integer articleId;
 	
 	public Integer getId() {

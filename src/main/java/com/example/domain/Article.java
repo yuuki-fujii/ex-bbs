@@ -1,5 +1,7 @@
 package com.example.domain;
 
+import java.util.List;
+
 /**
  * 記事の情報を表すドメインクラス.
  * 
@@ -16,6 +18,10 @@ public class Article {
 	/** 投稿内容 */
 	private String content;
 	
+	/** コメントリスト */
+	private List<Comment> commmentList;
+	
+
 	public Integer getId() {
 		return id;
 	}
@@ -34,5 +40,11 @@ public class Article {
 	}
 	public void setContent(String content) {
 		this.content = content;
+	}
+	public List<Comment> getCommmentList() {
+		return commmentList;
+	}
+	public void setCommmentList(List<Comment> commmentList) {
+		this.commmentList = commmentList;
 	}
 }

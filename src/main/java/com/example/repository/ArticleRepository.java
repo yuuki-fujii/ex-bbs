@@ -48,7 +48,7 @@ public class ArticleRepository {
 	/**
 	 * 投稿された記事をDBに保存する
 	 */
-	public void saveArticle(Article article) {
+	public void insertArticle(Article article) {
 		String sql = "INSERT INTO articles (name, content) VALUES (:name, :content)";
 		SqlParameterSource param = new MapSqlParameterSource()
 				 					.addValue("name", article.getName()).addValue("content", article.getContent());
