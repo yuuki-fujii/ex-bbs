@@ -6,6 +6,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -54,12 +56,7 @@ public class ArticleController {
 	 */
 	@RequestMapping("/index")
 	public String index(Model model) {
-		List <Article> articleList = articleRepository.findAll();
-		
-//		for (Article article : articleList) {
-//			article.setCommmentList(commentRepository.findByArticleId(article.getId()));
-//		}
-		
+		List <Article> articleList = articleRepository.findAll();		
 		model.addAttribute("articleList", articleList);
 		return "index";
 	}
@@ -71,7 +68,12 @@ public class ArticleController {
 	 * @return　記事投稿画面
 	 */
 	@RequestMapping("/insert-article")
-	public String insertArticle(ArticleForm form) {
+	public String insertArticle(@Validated ArticleForm form, BindingResult result,Model model) {
+		
+		if (result.hasErrors()) {
+			return index(model);
+		}
+		
 		Article article = new Article();
 		BeanUtils.copyProperties(form, article);
 		articleRepository.insert(article);

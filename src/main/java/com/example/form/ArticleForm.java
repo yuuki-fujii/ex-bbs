@@ -1,5 +1,8 @@
 package com.example.form;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 /**
  * 記事投稿フォーム.
  * 
@@ -11,9 +14,12 @@ public class ArticleForm {
 	private String id;
 	
 	/** 投稿者名 */
+	@NotBlank(message = "名前を入力してください")
+	@Size(max = 50, message = "名前は50文字以内で入力してください")
 	private String name;
 	
 	/** 投稿内容 */
+	@NotBlank(message = "記事を入力してください")
 	private String content;
 	
 	public String getId() {

@@ -7,7 +7,9 @@
 <body>
 <h3>掲示板アプリケーション</h3>
 <form th:action="@{/article/insert-article}" method="post" th:object="${articleForm}"> 
+<span th:errors="*{name}" style="color:red"></span><br>
 投稿者名：<input type="text" name="name" th:field="*{name}"><br>
+<span th:errors="*{content}" style="color:red"></span><br>
 投稿内容：<br><textarea name="content" cols="50" rows="5" th:field="*{content}"></textarea><br>
 <button>記事投稿</button>
 </form>
