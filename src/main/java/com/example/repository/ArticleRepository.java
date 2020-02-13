@@ -109,8 +109,10 @@ public class ArticleRepository {
 	 * 投稿をDBから削除する.
 	 */
 	public void deleteById(Integer id) {
-		String sql = "DELETE FROM articles WHERE id = :id";
+		StringBuilder sql = new StringBuilder();
+		sql.append("DELETE FROM comments WHERE article_id = :id ;");
+		sql.append("DELETE FROM articles WHERE id = :id");
 		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
-		template.update(sql, param);
+		template.update(sql.toString(), param);
 	}
 }

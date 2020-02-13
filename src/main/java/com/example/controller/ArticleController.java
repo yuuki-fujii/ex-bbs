@@ -102,7 +102,7 @@ public class ArticleController {
 	}
 	
 	/**
-	 * 投稿を削除する
+	 * 投稿を削除する.
 	 * 
 	 * @param id　主キー
 	 * @return　記事一覧画面
@@ -114,6 +114,18 @@ public class ArticleController {
 		return "redirect:/article/to-index";
 	}
 	
+	
+	/**
+	 * コメントを削除する.
+	 * 
+	 * @param id 主キー
+	 * @return　記事一覧画面
+	 */
+	@RequestMapping("/delete-comment")
+	public String deleteComment(int id) {
+		commentRepository.deleteById(id);
+		return "redirect:/article/to-index";
+	}
 	
 	/**
 	 * ダブルサブミット対策　リダイレクト用
