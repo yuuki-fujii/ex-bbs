@@ -7,6 +7,7 @@ package com.example.domain;
  *
  */
 public class Comment {
+	
 	/** 主キー */
 	private Integer id;
 	
@@ -43,5 +44,11 @@ public class Comment {
 	public void setArticleId(Integer articleId) {
 		this.articleId = articleId;
 	}
-
+	@Override
+	public String toString() {
+		return "Comment [id=" + id + ", name=" + name + ", content=" + content + ", articleId=" + articleId
+				+ ", getId()=" + getId() + ", getName()=" + getName() + ", getContent()=" + getContent()
+				+ ", getArticleId()=" + getArticleId() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", toString()=" + super.toString() + "]";
+	}
 }

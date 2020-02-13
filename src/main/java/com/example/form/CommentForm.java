@@ -13,6 +13,10 @@ public class CommentForm {
 	
 	/** コメント投稿内容 */
 	private String content;
+	
+	/** 記事ID */
+	private String articleId;
+	
 
 	public String getName() {
 		return name;
@@ -30,4 +34,15 @@ public class CommentForm {
 		this.content = content;
 	}
 	
+	public String getArticleId() {
+		return articleId;
+	}
+
+	public void setArticleId(String articleId) {
+		this.articleId = articleId;
+	}
+	
+	public Integer getIntArticleId() {
+		return Integer.parseInt(articleId);
+	}
 }

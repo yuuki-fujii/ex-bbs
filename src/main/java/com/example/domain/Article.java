@@ -47,4 +47,12 @@ public class Article {
 	public void setCommmentList(List<Comment> commmentList) {
 		this.commmentList = commmentList;
 	}
+	@Override
+	public String toString() {
+		return "Article [id=" + id + ", name=" + name + ", content=" + content + ", commmentList=" + commmentList
+				+ ", getId()=" + getId() + ", getName()=" + getName() + ", getContent()=" + getContent()
+				+ ", getCommmentList()=" + getCommmentList() + ", getClass()=" + getClass() + ", hashCode()="
+				+ hashCode() + ", toString()=" + super.toString() + "]";
+	}
+	
 }

@@ -56,7 +56,7 @@ public class ArticleRepository {
 	}
 	
 	/**
-	 * 投稿をデータベースから削除する.
+	 * 投稿をDBから削除する.
 	 */
 	public void deleteById(Integer id) {
 		String sql = "DELETE FROM articles WHERE id = :id";

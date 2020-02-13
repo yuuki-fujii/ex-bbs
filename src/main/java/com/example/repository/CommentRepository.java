@@ -41,7 +41,7 @@ public class CommentRepository {
 	 * @param articleId 記事ID 
 	 * @return 同一の記事IDを持つコメント　idの降順
 	 */
-	public List<Comment> findByArticle(int articleId) {
+	public List<Comment> findByArticleId(int articleId) {
 		String sql = "SELECT id, name, content, article_id FROM comments "
 					+"WHERE article_id = :articleId ORDER BY id DESC";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("articleId", articleId);
@@ -60,6 +60,18 @@ public class CommentRepository {
 					 "VALUES (:name, :content, :articleId)";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", comment.getName())
 									.addValue("content", comment.getContent()).addValue("articleId", comment.getArticleId());
+		template.update(sql, param);
+	}
+	
+	
+	/**
+	 * 削除された記事に紐づいているコメントをDBから削除する.
+	 * 
+	 * @param articleId 記事ID
+	 */
+	public void deleteByArticleId(int articleId) {
+		String sql = "DELETE FROM comments WHERE article_id = :articleId";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("articleId", articleId);
 		template.update(sql, param);
 	}
 	

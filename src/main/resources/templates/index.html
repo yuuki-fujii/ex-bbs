@@ -15,10 +15,11 @@
 <hr>
 
 <div th:each="article :${articleList}">
-	<form th:action="@{'/article/delete-article?id=' + ${article.id}}" method="post">
 	投稿ID：<span th:text="${article.id}"></span><br>
 	投稿者名：<span th:text="${article.name}"></span><br>
 	投稿内容：<span th:text="${article.content}"></span><br><br>
+	<form th:action="@{/article/delete-article}" method="post">
+	<input type="hidden" name="id" th:value="${article.id}">
 	<button>記事削除</button>
 	</form><br>
 	
@@ -28,7 +29,8 @@
 		コメント内容：<span th:text="${comment.content}"></span><br><br>
 	</div>
 	
-	<form th:action="@{'/article/insert-comment?articleId=' + ${article.id}}" method="post">
+	<form th:action="@{/article/insert-comment}" method="post">
+	<input type="hidden" name="articleId" th:value="${article.id}">
 	名前：<input type="text" name="name"><br>
 	コメント：<br><textarea name="content" cols="20" rows="2"></textarea><br><br>
 	<button>コメント投稿</button>
