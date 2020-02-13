@@ -6,7 +6,7 @@
 </head>
 <body>
 <h3>掲示板アプリケーション</h3>
-<form th:action="@{/article/insert}" method="post" th:object="${articleForm}"> 
+<form th:action="@{/article/insert-article}" method="post" th:object="${articleForm}"> 
 投稿者名：<input type="text" name="name" th:field="*{name}"><br>
 投稿内容：<br><textarea name="content" cols="50" rows="5" th:field="*{content}"></textarea><br>
 <button>記事投稿</button>
@@ -15,7 +15,7 @@
 <hr>
 
 <div th:each="article :${articleList}">
-	<form th:action="@{'/article/deleteArticle?id=' + ${article.id}}" method="post">
+	<form th:action="@{'/article/delete-article?id=' + ${article.id}}" method="post">
 	投稿ID：<span th:text="${article.id}"></span><br>
 	投稿者名：<span th:text="${article.name}"></span><br>
 	投稿内容：<span th:text="${article.content}"></span><br><br>
@@ -27,6 +27,13 @@
 		コメント者名：<span th:text="${comment.name}"></span><br>
 		コメント内容：<span th:text="${comment.content}"></span><br><br>
 	</div>
+	
+	<form th:action="@{'/article/insert-comment?articleId=' + ${article.id}}" method="post">
+	名前：<input type="text" name="name"><br>
+	コメント：<br><textarea name="content" cols="20" rows="2"></textarea><br><br>
+	<button>コメント投稿</button>
+	</form>
+	
 	<hr>
 </div>
 

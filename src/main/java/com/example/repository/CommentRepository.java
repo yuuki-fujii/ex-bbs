@@ -39,14 +39,28 @@ public class CommentRepository {
 	 * コメントの記事IDで記事を検索.
 	 * 
 	 * @param articleId 記事ID 
-	 * @return 同一の記事IDを持つコメント　idの昇順
+	 * @return 同一の記事IDを持つコメント　idの降順
 	 */
 	public List<Comment> findByArticle(int articleId) {
 		String sql = "SELECT id, name, content, article_id FROM comments "
-					+"WHERE article_id = :articleId ORDER BY id";
+					+"WHERE article_id = :articleId ORDER BY id DESC";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("articleId", articleId);
 		List <Comment> commentList = template.query(sql, param,COMMENT_ROW_MAPPER);
 		return commentList;
+	}
+	
+	
+	/**
+	 * 投稿されたコメントをDBに保存する.
+	 * 
+	 * @param comment コメント
+	 */
+	public void insert(Comment comment) {
+		String sql = "INSERT INTO comments (name, content, article_id) " +
+					 "VALUES (:name, :content, :articleId)";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("name", comment.getName())
+									.addValue("content", comment.getContent()).addValue("articleId", comment.getArticleId());
+		template.update(sql, param);
 	}
 	
 }

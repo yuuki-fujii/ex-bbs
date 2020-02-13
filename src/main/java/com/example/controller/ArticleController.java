@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.Article;
+import com.example.domain.Comment;
 import com.example.form.ArticleForm;
+import com.example.form.CommentForm;
 import com.example.repository.ArticleRepository;
 import com.example.repository.CommentRepository;
 
@@ -57,12 +59,22 @@ public class ArticleController {
 	 * @param model　リクエストスコープ
 	 * @return　記事投稿画面
 	 */
-	@RequestMapping("/insert")
-	public String insert(ArticleForm form) {
+	@RequestMapping("/insert-article")
+	public String insertArticle(ArticleForm form) {
 		Article article = new Article();
 		article.setName(form.getName());
 		article.setContent(form.getContent());
-		articleRepository.insertArticle(article);
+		articleRepository.insert(article);
+		return "redirect:/article/to-index";
+	}
+	
+	@RequestMapping("/insert-comment")
+	public String insertComment(CommentForm form, Integer articleId) {
+		Comment comment = new Comment();
+		comment.setName(form.getName());
+		comment.setContent(form.getContent());
+		comment.setArticleId(articleId);
+		commentRepository.insert(comment);
 		return "redirect:/article/to-index";
 	}
 	
@@ -72,9 +84,9 @@ public class ArticleController {
 	 * @param id　主キー
 	 * @return　
 	 */
-	@RequestMapping("/deleteArticle")
+	@RequestMapping("/delete-article")
 	public String deleteArticle(Integer id) {
-		articleRepository.deleteArticle(id);
+		articleRepository.deleteById(id);
 		return "redirect:/article/to-index";
 	}
 	
