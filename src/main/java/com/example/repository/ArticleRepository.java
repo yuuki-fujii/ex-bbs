@@ -1,9 +1,7 @@
 package com.example.repository;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.ResultSetExtractor;
@@ -40,39 +38,46 @@ public class ArticleRepository {
 	/**
 	 * 結合したテーブルを表示するResultSetExtractor.
 	 */
+	
+	// コメントアウトした分はレビュー前
 	private static final ResultSetExtractor<List<Article>>  ARTICLE_RESULT_SET_EXTRACTOR
 		= (rs)->{
 			List <Article> articleList = new ArrayList<>();
-			Map<Integer ,Article> map = new LinkedHashMap<>();
-			Article article = null;
-			
+//			Map<Integer ,Article> beforeAritcleIdMap = new LinkedHashMap<>();
+			int beforeAritcleId = 0;
+//			Article article = null;
+			List <Comment> commentList = null;
 			while (rs.next()) {
-				Integer articleId = rs.getInt("article_id");
-				Integer commentId = rs.getInt("comment_id");
-				List <Comment> commentList = new ArrayList<>();
+				Integer nowArticleId = rs.getInt("article_id");
+//				Integer commentId = rs.getInt("comment_id");
+//				List <Comment> commentList = new ArrayList<>();
 				
-				article = map.get(articleId);
-				if (article == null) {
-					article = new Article();
-					article.setId(articleId);
+//				article = beforeAritcleIdMap.get(articleId);
+				if (beforeAritcleId != nowArticleId) {
+//				if (article == null) {
+					Article article = new Article();
+					article.setId(nowArticleId);
 					article.setName(rs.getString("article_name"));
 					article.setContent(rs.getString("article_content"));
+					commentList = new ArrayList<>();
 					article.setCommmentList(commentList);
 					articleList.add(article);
-					map.put(articleId, article);
+//					beforeAritcleIdMap.put(articleId, article);
 				}
 				
-				if(commentId != 0) {
+				if(rs.getInt("comment_id") != 0) {
 					Comment comment = new Comment();
 					comment.setId(rs.getInt("comment_id"));
 					comment.setName(rs.getString("comment_name"));
 					comment.setContent(rs.getString("comment_content"));
 					comment.setArticleId(rs.getInt("comment_article_id"));
 					
-					article = articleList.get(articleList.size()- 1);
-					commentList = article.getCommmentList();
+//					article = articleList.get(articleList.size()- 1);
+//					commentList = article.getCommmentList();
 					commentList.add(comment);
 				}		
+				
+				beforeAritcleId = nowArticleId;
 			}
 			return articleList;
 		};
@@ -109,10 +114,9 @@ public class ArticleRepository {
 	 * 投稿をDBから削除する.
 	 */
 	public void deleteById(Integer id) {
-		StringBuilder sql = new StringBuilder();
-		sql.append("DELETE FROM comments WHERE article_id = :id ;");
-		sql.append("DELETE FROM articles WHERE id = :id");
+		String sql = "WITH deleted AS (DELETE FROM articles WHERE id = :id RETURNING id) " + 
+				     "DELETE FROM comments WHERE article_id  IN (SELECT article_id FROM deleted);";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
-		template.update(sql.toString(), param);
+		template.update(sql, param);
 	}
 }
